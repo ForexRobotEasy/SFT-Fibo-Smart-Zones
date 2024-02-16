@@ -1,0 +1,116 @@
+
+//+------------------------------------------------------------------+
+//|                                           SFT Fibo Smart Zones.mq5|
+//|                          Copyright 2021, forexroboteasy.com       |
+//|                                         Developed by Forex Robot  |
+//|                                  Easy Team                          |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+   // Initialize necessary variables and settings
+   return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+   // Perform necessary cleanup tasks
+}
+
+//+------------------------------------------------------------------+
+//| Expert start function                                            |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+   // Calculate Fibonacci golden ratio and overbought/oversold levels
+   double fibLevel = CalculateFibonacciLevel();
+   double overBoughtLevel = CalculateOverBoughtLevel();
+   double overSoldLevel = CalculateOverSoldLevel();
+
+   // Identify potential trading opportunities
+   bool isTrendFollowing = IsTrendFollowing(fibLevel);
+   bool isCounterTrend = IsCounterTrend(fibLevel);
+
+   // Execute necessary trading functions
+   if(isTrendFollowing)
+   {
+      ExecuteTrendFollowingStrategy();
+   }
+   else if(isCounterTrend)
+   {
+      ExecuteCounterTrendStrategy();
+   }
+}
+
+//+------------------------------------------------------------------+
+//| Calculate Fibonacci level                                        |
+//+------------------------------------------------------------------+
+double CalculateFibonacciLevel()
+{
+   // Calculate Fibonacci level using golden ratio formula
+   return (MarketInfo(Symbol(), MODE_HIGH, 0) - MarketInfo(Symbol(), MODE_LOW, 0)) * 0.618;
+}
+
+//+------------------------------------------------------------------+
+//| Calculate overbought level                                       |
+//+------------------------------------------------------------------+
+double CalculateOverBoughtLevel()
+{
+   // Calculate overbought level
+   return MarketInfo(Symbol(), MODE_HIGH, 0) * 1.1;
+}
+
+//+------------------------------------------------------------------+
+//| Calculate oversold level                                         |
+//+------------------------------------------------------------------+
+double CalculateOverSoldLevel()
+{
+   // Calculate oversold level
+   return MarketInfo(Symbol(), MODE_LOW, 0) * 0.9;
+}
+
+//+------------------------------------------------------------------+
+//| Check if it is a trend-following opportunity                     |
+//+------------------------------------------------------------------+
+bool IsTrendFollowing(const double fibLevel)
+{
+   // Determine if current price is above or below Fibonacci level
+   if(MarketInfo(Symbol(), MODE_CLOSE, 0) > fibLevel)
+      return true;
+   else
+      return false;
+}
+
+//+------------------------------------------------------------------+
+//| Check if it is a counter-trend opportunity                       |
+//+------------------------------------------------------------------+
+bool IsCounterTrend(const double fibLevel)
+{
+   // Determine if current price is above or below Fibonacci level
+   if(MarketInfo(Symbol(), MODE_CLOSE, 0) < fibLevel)
+      return true;
+   else
+      return false;
+}
+
+//+------------------------------------------------------------------+
+//| Execute trend-following strategy                                 |
+//+------------------------------------------------------------------+
+void ExecuteTrendFollowingStrategy()
+{
+   // Place Buy or Sell orders based on trend-following strategy
+}
+
+//+------------------------------------------------------------------+
+//| Execute counter-trend strategy                                   |
+//+------------------------------------------------------------------+
+void ExecuteCounterTrendStrategy()
+{
+   // Place Buy or Sell orders based on counter-trend strategy
+}
